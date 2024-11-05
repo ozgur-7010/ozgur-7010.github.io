@@ -1,0 +1,23 @@
+<script>
+function toGit(value)
+{
+	var r1 = value.slice(1, -1).split(", json=");
+	var r2 = (r1[0].split("pullrequest=")[1] || "").slice(1, -1).split(",").map(x => x.trim()).reduce((re, cu) => { var t = cu.split("="); re[t[0]] = t[1]; return re; }, {});
+	var r3 = r1[1] ? JSON.parse(r1[1]) : {};
+	
+	return { ...r2, ...r3 };
+}
+
+const data =
+	fetch("https://coingaming.atlassian.net/rest/api/2/search?jql=project%3DTRAD%20AND%20assignee%3DcurrentUser()",
+		{
+			mode: "cors",
+			/*
+			headers: {
+				"Content-Type": "application/json",
+				"Access-Control-Allow-Origin": ""
+			}*/
+		})
+		.then(console.log);
+
+</script>
